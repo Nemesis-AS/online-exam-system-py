@@ -25,9 +25,10 @@ def show_dialog():
             console.print("Welcome Admin", style="bold blue")
         else:
             console.print("Welcome User", style="bold blue")
+        
+        return auth_status
     else:
-        # Try Again
-        pass
+        show_dialog()
 
 # Returns [Authentication state, amdin previliges, output string]
 def authenticate(username, password):
