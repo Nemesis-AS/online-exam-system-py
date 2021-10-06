@@ -1,0 +1,8 @@
+colorama==0.4.4
+commonmark==0.9.1
+docopt==0.6.2
+lark-parser==0.8.0
+mysql-connector-python==8.0.26
+Pygments==2.10.0
+PyYAML==5.4.1
+rich==10.10.0
