@@ -16,16 +16,16 @@ def show_options(options: list) -> int:
 
 # Actions
 def attempt_ques_paper():
-    pass
+    console.print("Attempting Ques Paper...")
 
 def view_result():
-    pass
+    console.print("Viewing Result...")
 
 def see_prev_papers():
-    pass
+    console.print("Viewing Previous Papers...")
 
 def view_answer_key():
-    pass
+    console.print("Viewing Answer Key...")
 
 def show_user_menu() -> None:
     options = ["Attempt Question Paper", "My Result", "See Prev Papers", "View Answer Key"]
