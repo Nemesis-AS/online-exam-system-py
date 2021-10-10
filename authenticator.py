@@ -14,7 +14,7 @@ users = {
     "achyut": "password6"
 }
 
-def show_dialog():
+def show_dialog() -> bool:
     uname = console.input("Enter Username: ")
     pwd = console.input("Enter Password: ")
 
@@ -26,12 +26,12 @@ def show_dialog():
         else:
             console.print("Welcome User", style="bold blue")
         
-        return auth_status
+        return auth_status[1]
     else:
         show_dialog()
 
 # Returns [Authentication state, amdin previliges, output string]
-def authenticate(username, password):
+def authenticate(username: str, password: str) -> list:
     if username in users:
         if users[username] == password:
             return [True, False, "[green]Login Successfull![/]"]
