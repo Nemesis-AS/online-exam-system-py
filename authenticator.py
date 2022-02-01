@@ -1,18 +1,17 @@
-from rich.console import Console
+import config
 
+from rich.console import Console
+import mysql.connector
+
+db = mysql.connector.connect(
+    user="root",
+    host="localhost",
+    passwd=config.MYSQL_PASSWORD,
+    database="Online_Exam_System"
+)
+cursor = db.cursor()
 console = Console()
 
-admins = {
-    "nemesis": "password1",
-    "kaif": "password2",
-    "krish": "password3"
-}
-
-users = {
-    "dhruv": "password4",
-    "adhish": "password5",
-    "achyut": "password6"
-}
 
 def show_dialog() -> bool:
     uname = console.input("Enter Username: ")
@@ -25,22 +24,27 @@ def show_dialog() -> bool:
             console.print("Welcome Admin", style="bold blue")
         else:
             console.print("Welcome User", style="bold blue")
-        
+
         return is_admin
     else:
         show_dialog()
 
+
 # Returns [Authentication state, amdin previliges, output string]
 def authenticate(username: str, password: str) -> list:
-    if username in users:
-        if users[username] == password:
-            return True, False, "[green]Login Successfull![/]"
-        else:
-            return False, False, "[red]Incorrect Password![/]"
-    elif username in admins:
-        if admins[username] == password:
-            return True, True, "[green]Login Successfull![/]"
+    user_data = get_user_data(username)
+
+    if user_data:
+        if password == user_data[1]:
+            return True, bool(user_data[2]), "[green]Login Successfull![/]"
         else:
             return False, False, "[red]Incorrect Password![/]"
     else:
         return False, False, "[red]Incorrect Username![/]"
+
+
+def get_user_data(username: str):  # item = (username, password, admin)
+    cursor.execute(f"SELECT * FROM Users WHERE username='{username}'")
+    for item in cursor:
+        return item
+    return None
