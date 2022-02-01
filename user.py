@@ -8,7 +8,7 @@ def show_options(options: list) -> int:
     for idx in range(len(options)):
         output += f"{idx+1}.{options[idx]}\n"
     
-    console.rule("[bold green]Select Action")
+    console.rule("[bold green]Select Action[/]")
     console.print(output)
     selected_option = int(console.input(f"Select Action[{1} - {len(options)}]: "))
 

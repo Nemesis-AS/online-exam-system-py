@@ -12,4 +12,3 @@ if is_admin:
     admin.show_admin_menu()
 else:
     user.show_user_menu()
-

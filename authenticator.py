@@ -18,15 +18,15 @@ def show_dialog() -> bool:
     uname = console.input("Enter Username: ")
     pwd = console.input("Enter Password: ")
 
-    auth_status = authenticate(uname, pwd)
-    console.print(auth_status[2])
-    if auth_status[0]:
-        if auth_status[1]:
+    auth_status, is_admin, output = authenticate(uname.lower(), pwd)
+    console.print(output)
+    if auth_status:
+        if is_admin:
             console.print("Welcome Admin", style="bold blue")
         else:
             console.print("Welcome User", style="bold blue")
         
-        return auth_status[1]
+        return is_admin
     else:
         show_dialog()
 
@@ -34,13 +34,13 @@ def show_dialog() -> bool:
 def authenticate(username: str, password: str) -> list:
     if username in users:
         if users[username] == password:
-            return [True, False, "[green]Login Successfull![/]"]
+            return True, False, "[green]Login Successfull![/]"
         else:
-            return [False, False, "[red]Incorrect Password![/]"]
+            return False, False, "[red]Incorrect Password![/]"
     elif username in admins:
         if admins[username] == password:
-            return [True, True, "[green]Login Successfull![/]"]
+            return True, True, "[green]Login Successfull![/]"
         else:
-            return [False, False, "[red]Incorrect Password![/]"]
+            return False, False, "[red]Incorrect Password![/]"
     else:
-        return [False, False, "[red]Incorrect Username![/]"]
+        return False, False, "[red]Incorrect Username![/]"
