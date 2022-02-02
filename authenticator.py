@@ -1,7 +1,6 @@
 import config
-
-from rich.console import Console
 import mysql.connector
+from rich.console import Console
 
 db = mysql.connector.connect(
     user="root",
