@@ -28,6 +28,16 @@ def add_paper_to_db(title, subject, max_marks, noq, start, duration, class_no):
     console.print("[green]Added Paper Successfully![/]")
 
 
+def get_papers_from_db():
+    cursor.execute("SELECT * FROM Papers")
+    return cursor.fetchall()
+
+
+def get_paper_by_id(paper_id: int):
+    cursor.execute(f"SELECT * FROM Papers WHERE id = {paper_id}")
+    return cursor.fetchone()
+
+
 def show_options(options: list) -> int:
     output = ""
 
@@ -96,11 +106,27 @@ def add_ques_paper():
 
     # save_to_file(paper_data)
 
+    # https://youtube.com/playlist?list=PLTuJWtGVCB8HzEXPc3AKH37_-PXOkhKDH
+
 
 def edit_ques_paper():
-    papers = json.loads(read_from_file())
-    console.print(papers)
-    console.print("Editing Ques Paper...")
+    papers = get_papers_from_db()
+    for paper in papers:
+        console.print(paper)
+
+    paper_choice = int(console.input("Enter Paper ID to select: "))
+    if paper_choice >= len(papers):
+        console.print("[red]Invalid Choice![/]")
+        return
+    paper_id = papers[paper_choice][0]
+    selected_paper = get_paper_by_id(paper_id)
+    if not selected_paper:
+        console.print("[red]Paper Not Found![/]")
+        return
+
+    console.print(selected_paper)
+
+    # console.print("Editing Ques Paper...")
 
 
 def view_results():
@@ -133,3 +159,4 @@ def show_admin_menu() -> None:
 
 # add_ques_paper()
 # add_paper_to_db("", "", 0, 0, "", 0, 0)
+# print(get_paper_by_id(1))

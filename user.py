@@ -77,4 +77,4 @@ def show_user_menu() -> None:
         console.print("invalid Choice")
 
 
-print(get_papers())
+# print(get_papers())
