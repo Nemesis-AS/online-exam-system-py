@@ -13,20 +13,29 @@ console = Console()
 
 
 def show_dialog() -> bool:
+    console.print("1. Sign In\n2. Sign Up")
+    choice = int(console.input("Enter Choice: "))
+
     uname = console.input("Enter Username: ")
     pwd = console.input("Enter Password: ")
 
-    auth_status, is_admin, output = authenticate(uname.lower(), pwd)
-    console.print(output)
-    if auth_status:
-        if is_admin:
-            console.print("Welcome Admin", style="bold blue")
-        else:
-            console.print("Welcome User", style="bold blue")
+    if choice == 1:
+        auth_status, is_admin, output = authenticate(uname.lower(), pwd)
+        console.print(output)
+        if auth_status:
+            if is_admin:
+                console.print("Welcome Admin", style="bold blue")
+            else:
+                console.print("Welcome User", style="bold blue")
 
-        return is_admin
+            return is_admin, uname
+        else:
+            show_dialog()
     else:
-        show_dialog()
+        user_class = console.input("Enter Class: ")
+        create_new_user(uname, pwd, user_class)
+        console.print("Created User Successfully!")
+        return False, None
 
 
 # Returns [Authentication state, amdin previliges, output string]
@@ -47,3 +56,9 @@ def get_user_data(username: str):  # item = (username, password, admin)
     for item in cursor:
         return item
     return None
+
+
+def create_new_user(username: str, password: str, user_class: int):
+    cursor.execute(
+        f"INSERT INTO Users(username, password, class) VALUES('{username}', '{password}', {user_class})")
+    db.commit()
