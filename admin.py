@@ -8,13 +8,16 @@ from rich import box
 db = mysql.connector.connect(
     user="root",
     host="localhost",
-    passwd=config.MYSQL_PASSWORD,
-    database="Online_Exam_System"
+    passwd=config.MYSQL_PASSWORD
 )
 cursor = db.cursor(buffered=True)
 console = Console()
 
 # Utility Functions
+
+
+def init() -> None:
+    cursor.execute(f"USE {config.DB_NAME}")
 
 
 def add_paper_to_db(title, subject, max_marks, noq, start, duration, class_no):
@@ -190,9 +193,6 @@ def resolve_complaints():  # Done
         f"UPDATE Complaints SET resolved=True, response='{res}' WHERE id = {curr_complaint[0]}")
     db.commit()
     console.print("[green bold]Resolved Complaint Successfully![/]")
-
-
-resolve_complaints()
 
 
 def show_admin_menu() -> None:  # Start

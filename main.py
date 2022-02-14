@@ -1,10 +1,17 @@
+import config
 from rich.console import Console
 
 import authenticator
 import admin
 import user
+import init
 
 console = Console()
+
+init.init_db(config.DB_NAME)
+authenticator.init()
+user.init()
+admin.init()
 
 console.rule("[bold green]Fatima School Online Exam System[/]")
 

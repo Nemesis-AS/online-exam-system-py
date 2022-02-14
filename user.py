@@ -7,8 +7,7 @@ from rich import box
 db = mysql.connector.connect(
     user="root",
     host="localhost",
-    passwd=config.MYSQL_PASSWORD,
-    database="Online_Exam_System"
+    passwd=config.MYSQL_PASSWORD
 )
 cursor = db.cursor()
 console = Console()
@@ -16,6 +15,10 @@ console = Console()
 user_info = ()  # ('dhruv', 'password4', 0, 12)
 
 # Utility Functions
+
+
+def init() -> None:
+    cursor.execute(f"USE {config.DB_NAME}")
 
 
 def show_options(options: list) -> int:

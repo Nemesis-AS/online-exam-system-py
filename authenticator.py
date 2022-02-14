@@ -5,11 +5,14 @@ from rich.console import Console
 db = mysql.connector.connect(
     user="root",
     host="localhost",
-    passwd=config.MYSQL_PASSWORD,
-    database="Online_Exam_System"
+    passwd=config.MYSQL_PASSWORD
 )
 cursor = db.cursor()
 console = Console()
+
+
+def init() -> None:
+    cursor.execute(f"USE {config.DB_NAME}")
 
 
 def show_dialog() -> bool:
